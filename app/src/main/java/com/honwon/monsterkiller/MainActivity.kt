@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     var killCount = 1
     var imageCode = 1
 
+    var esterEgg =0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,14 +57,15 @@ class MainActivity : AppCompatActivity() {
         loadData()
         bloodB()
 
-        button2.setOnClickListener {
-            attack(1000000090)
-        }
 
-        button.setOnClickListener {
-            Glide.with(this)
-                .load(R.raw.heal)
-                .into(GlideDrawableImageViewTarget(imageEffect,1))
+
+        bloodBar.setOnClickListener {
+            if(esterEgg==15){
+                attack(100000000)
+            }else{
+                esterEgg+=1
+            }
+
         }
 
 
@@ -93,6 +96,7 @@ class MainActivity : AppCompatActivity() {
             if(randomCount==0){
                 alert(Appcompat, "다음 레벨에서 사용할 수 있습니다"){positiveButton("확인"){} }.show()
             }else {
+                window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 randomCount -= 1
                 countB()
             damageInit()
@@ -101,6 +105,9 @@ class MainActivity : AppCompatActivity() {
                     .into(GlideDrawableImageViewTarget(imageEffect,1))
             var randomDamage = Random().nextInt(skillDamage * 20 + 1)
             attack(randomDamage)}
+            Handler().postDelayed({
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            },3000)
         }
 
         //노말데미지
@@ -173,7 +180,7 @@ class MainActivity : AppCompatActivity() {
             }
             Handler().postDelayed({
                 nextStageBtn.setVisibility(View.VISIBLE)
-            }, 4500)
+            }, 5000)
 
         }
     }
@@ -252,7 +259,7 @@ class MainActivity : AppCompatActivity() {
 
     // 보스 회복
     fun bossHeal() {
-
+        esterEgg=0
         level += 1
         blood += 100 * level * level
         bloodBar.max = blood
@@ -272,7 +279,7 @@ class MainActivity : AppCompatActivity() {
         if(killCount==1){
         val nanugi = (bloodBar.progress.toFloat() / bloodBar.max.toFloat() * 100).toInt()
         //30분의 1 확률
-        if (Random().nextInt(50) == 7) {
+        if (Random().nextInt(30) == 7) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             textDamage.setTextColor(GREEN)
             Glide.with(this)
@@ -280,18 +287,18 @@ class MainActivity : AppCompatActivity() {
                 .into(GlideDrawableImageViewTarget(imageEffect, 1))
             val beforeProgress = bloodBar.progress
             when (nanugi) {
-                in 71..90 -> bloodBar.progress += nomalDamage * Random().nextInt(2)+1
-                in 51..70 -> bloodBar.progress += nomalDamage * Random().nextInt(4)+2
-                in 36..50 -> bloodBar.progress += nomalDamage * Random().nextInt(8)+4
-                in 21..35 -> bloodBar.progress += nomalDamage * Random().nextInt(16)+8
-                in 11..20 -> bloodBar.progress += nomalDamage * Random().nextInt(32)+16
-                in 1..10 -> bloodBar.progress += nomalDamage * Random().nextInt(64)+32
+                in 71..90 -> bloodBar.progress +=level * (Random().nextInt(2)+1)
+                in 51..70 -> bloodBar.progress +=level * (Random().nextInt(4)+2)
+                in 36..50 -> bloodBar.progress +=level * (Random().nextInt(8)+4)
+                in 21..35 -> bloodBar.progress +=level * (Random().nextInt(16)+8)
+                in 11..20 -> bloodBar.progress +=level * (Random().nextInt(32)+16)
+                in 1..10 -> bloodBar.progress += level* (Random().nextInt(64)+32)
             }
             val afterProgress = bloodBar.progress
             textDamage.setText("+${afterProgress-beforeProgress}")
             Handler().postDelayed({
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-            },1000)
+            },750)
             }}
 
         }
