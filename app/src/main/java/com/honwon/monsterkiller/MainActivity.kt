@@ -123,11 +123,16 @@ class MainActivity : AppCompatActivity() {
 
         //스킬데미지
         skillBtn.setOnClickListener {
+            window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
             damageInit()
             Glide.with(applicationContext)
                 .load(R.raw.explosion)
                 .into(GlideDrawableImageViewTarget(imageEffect,1))
             attack(skillDamage)
+            Handler().postDelayed({
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            },500)
+
         }
 
         //다음스테이지 버튼
