@@ -31,6 +31,7 @@
         android:layout_marginEnd="8dp"
         android:max="1000"
         android:progress="1000"
+        android:progressTint="#FF0000"
         android:scaleY="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -39,10 +40,10 @@
 
     <Button
         android:id="@+id/nomalBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:text="일반공격"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="50dp"
+        android:background="@drawable/night"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,10 +51,10 @@
 
     <Button
         android:id="@+id/skillBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="36dp"
-        android:text="스킬"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="50dp"
+        android:background="@drawable/magicwand"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -61,22 +62,23 @@
 
     <Button
         android:id="@+id/randomBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:text="랜덤공격"
+        android:background="@drawable/magiccircle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <Button
         android:id="@+id/fingerBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:text="지문공격"
+        android:background="@drawable/fingerprint"
+        android:backgroundTint="#000000"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
@@ -102,6 +104,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
         android:text="다음 스테이지로"
+        android:textColor="@android:color/white"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -112,6 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/bloodBar"
         app:layout_constraintEnd_toEndOf="@+id/bloodBar"
         app:layout_constraintTop_toTopOf="@+id/bloodBar" />
@@ -121,6 +125,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/bloodBar"
         app:layout_constraintStart_toStartOf="@+id/bloodBar"
         app:layout_constraintTop_toTopOf="@+id/bloodBar" />
@@ -145,6 +150,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="60dp"
         android:text="Button"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -174,47 +180,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="개발자버튼"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/fingerText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView3" />
+        android:layout_marginBottom="4dp"
+        android:text="남은 횟수: 2232"
+        app:layout_constraintBottom_toTopOf="@+id/fingerBtn"
+        app:layout_constraintEnd_toEndOf="@+id/fingerBtn"
+        app:layout_constraintStart_toStartOf="@+id/fingerBtn" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/magicText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
+        android:layout_marginBottom="4dp"
+        android:text="남은 횟수: 2232"
+        app:layout_constraintBottom_toTopOf="@+id/randomBtn"
+        app:layout_constraintEnd_toEndOf="@+id/randomBtn"
+        app:layout_constraintStart_toStartOf="@+id/randomBtn" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

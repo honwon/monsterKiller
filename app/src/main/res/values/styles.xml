@@ -1,10 +1,17 @@
 <resources>
     <!-- Base application theme. -->
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- 테마의 주요 컬러 -->
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <!-- 테마의 어두운 주요 컬러 -->
+        <item name="colorPrimaryDark">#000000</item>
+        <!-- 테마의 포인트 컬러 -->
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- 버튼의 컬러 -->
+        <item name="colorButtonNormal">@color/colorButton</item>
+        <!-- 버튼등 텍스트 컬러 -->
+        <item name="android:textColor">@color/colorButtonText</item>
     </style>
 
 </resources>
