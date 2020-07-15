@@ -3,7 +3,9 @@ package com.honwon.monsterkiller
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.transition.Transition
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.Nullable
@@ -17,6 +19,8 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 import kotlinx.android.synthetic.main.activity_main.*
 import me.aflak.libraries.FingerprintCallback
 import me.aflak.libraries.FingerprintDialog
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 import java.util.*
 
 
@@ -30,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     var specialCount = 1
     //랜덤기술술
    var randomCount = 1
+
     var nomalDamage = 1
     var skillDamage = nomalDamage * 5
     var moveDamage = nomalDamage * 10
@@ -38,14 +43,13 @@ class MainActivity : AppCompatActivity() {
     var killCount = 1
     var imageCode = 1
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         loadData()
         bloodB()
-
-
 
         button2.setOnClickListener {
             attack(1000000090)
@@ -60,6 +64,13 @@ class MainActivity : AppCompatActivity() {
 
 
         fingerBtn.setOnClickListener {
+            if(specialCount==0){
+                toast("다음 레벨에서 사용할 수 있습니다")
+            }else {
+                specialCount -= 1
+                if(specialCount != 0){
+                    toast("앞으로 ${specialCount}번 더 사용할 수 있습니다")
+                }
 
             if (Build.VERSION.SDK_INT >= 23) {
                 FingerprintDialog.initialize(this).title("필살기").message("우오오오오 나에게 힘을!").callback(object : FingerprintCallback {
@@ -69,13 +80,22 @@ class MainActivity : AppCompatActivity() {
                             attack(moveDamage)}
                         // 인증실패인 경우 컬백함수
                         override fun onAuthenticationCancel() {Toast.makeText(applicationContext, "참고: 재미로 만든 것이며 개인정보와 아무런 관련이 없습니다", Toast.LENGTH_LONG).show()}}).show()
-            } else {Toast.makeText(applicationContext, "이 기능을 사용할 수 있는 버전의 기기가 아닙니다", Toast.LENGTH_LONG).show()}}
+            } else {Toast.makeText(applicationContext, "이 기능을 사용할 수 있는 버전의 기기가 아닙니다", Toast.LENGTH_LONG).show()}
+            }
+        }
 
         //랜덤데미지
         randomBtn.setOnClickListener {
+            if(randomCount==0){
+                toast("다음 레벨에서 사용할 수 있습니다")
+            }else {
+                randomCount -= 1
+                if(randomCount != 0){
+                    toast("앞으로 ${randomCount}번 더 사용할 수 있습니다")
+                }
             damageInit()
             var randomDamage = Random().nextInt(skillDamage * 20 + 1)
-            attack(randomDamage)
+            attack(randomDamage)}
         }
 
         //노말데미지
@@ -93,7 +113,11 @@ class MainActivity : AppCompatActivity() {
         //다음스테이지 버튼
         nextStageBtn.setOnClickListener {
             bossHeal()
+            revibalMessage()
+
+
         }
+
 
     }
 
@@ -107,15 +131,17 @@ class MainActivity : AppCompatActivity() {
         imageChange()
         bloodB()
 
-
     }
 
     // 보스 몬스터가 죽었을 때
     fun bossKill() {
         if (bloodBar.progress == 0 && killCount == 1) {
-            Toast.makeText(applicationContext, "퇴치 성공!", Toast.LENGTH_SHORT).show()
+            imageView.setImageResource(R.drawable.rip)
+            Toast.makeText(applicationContext, "토벌 성공!", Toast.LENGTH_SHORT).show()
             textDamage.text=""
             killCount = 0
+            imageCode = 0
+            dieMessage()
             nextStageBtn.setVisibility(View.VISIBLE)
         }
     }
@@ -136,35 +162,44 @@ class MainActivity : AppCompatActivity() {
                 imageCode = 6}
             in 1..10 -> {imageView.setImageResource(R.drawable.boss_7)
                 imageCode = 7}}
-        if (bloodBar.progress == 0) {
-            imageView.setImageResource(R.drawable.rip)
-            imageCode = 0
-
+        if (nanugi ==0 && killCount == 1){
+            imageView.setImageResource(R.drawable.boss_7)
+            imageCode = 7
         }
     }
+
 
     fun damageInit(){
         nomalDamage = 1
         nomalDamage =  Random().nextInt(nomalDamage+level)+nomalDamage*level
         skillDamage = Random().nextInt(nomalDamage*5)+nomalDamage*5
         moveDamage = Random().nextInt(nomalDamage*level*10) +nomalDamage * 100
+
     }
 
 
     fun dieMessage(){
-        val number = Random().nextInt(1)
+        val number = Random().nextInt(2)
         when(number){
-        }
-
-
+            0 -> longToast("밍구.. 이 벌레녀석..").apply{
+                setGravity(Gravity.CENTER_HORIZONTAL,0,0)
+                setGravity(Gravity.CENTER_VERTICAL,0,300)            }
+            1 -> longToast("윽.. 다시 돌아오겠다..").apply{
+                setGravity(Gravity.CENTER_HORIZONTAL,0,0)
+                setGravity(Gravity.CENTER_VERTICAL,0,300)        }}
     }
-
-    fun revivalMessage(){
-        val number = Random().nextInt()
-
-
+    fun revibalMessage(){
+        val number = Random().nextInt(2)
+        Handler().postDelayed({
+            when(number){
+                0 -> longToast("크하하하하하하핫 너는 날 죽일 수 없다!").apply{
+                    setGravity(Gravity.CENTER_HORIZONTAL,0,0)
+                    setGravity(Gravity.CENTER_VERTICAL,0,300)            }
+                1 -> longToast("포끝갈사람!?").apply{
+                    setGravity(Gravity.CENTER_HORIZONTAL,0,0)
+                    setGravity(Gravity.CENTER_VERTICAL,0,300)        }}
+        }, 1000)
     }
-
 
     // 보스 회복
     fun bossHeal() {
@@ -173,28 +208,29 @@ class MainActivity : AppCompatActivity() {
         bloodBar.max = blood
         bloodBar.progress = blood
         killCount = 1
+        randomCount = 1 + (level / 3.0).toInt()
+        specialCount = 1 + (level / 2.0).toInt()
         bloodB()
-
         imageView.setImageResource(R.drawable.boss_1)
         imageCode=1
         nextStageBtn.visibility = View.INVISIBLE
     }
 
     //보스 랜덤으로 피 회복
-    fun randomHeal(){
+    fun randomHeal() {
         val nanugi = (bloodBar.progress.toFloat() / bloodBar.max.toFloat() * 100).toInt()
         //30분의 1 확률
-        if(Random().nextInt(50) == 7){
+        if (Random().nextInt(50) == 7) {
             Glide.with(this)
                 .load(R.raw.heal)
-                .into(GlideDrawableImageViewTarget(imageEffect,1))
+                .into(GlideDrawableImageViewTarget(imageEffect, 1))
             when (nanugi) {
-                in 71..90 -> bloodBar.progress += nomalDamage*1
-                in 51..70 -> bloodBar.progress += nomalDamage*2
-                in 36..50 -> bloodBar.progress += nomalDamage*4
-                in 21..35 -> bloodBar.progress += nomalDamage*8
-                in 11..20 -> bloodBar.progress += nomalDamage*16
-                in 1..10 -> bloodBar.progress += nomalDamage*32
+                in 71..90 -> bloodBar.progress += nomalDamage * 1
+                in 51..70 -> bloodBar.progress += nomalDamage * 2
+                in 36..50 -> bloodBar.progress += nomalDamage * 4
+                in 21..35 -> bloodBar.progress += nomalDamage * 8
+                in 11..20 -> bloodBar.progress += nomalDamage * 16
+                in 1..10 -> bloodBar.progress += nomalDamage * 32
             }
         }
     }
@@ -209,25 +245,27 @@ class MainActivity : AppCompatActivity() {
 
     fun loadData() {
         val pref = this.getPreferences(0)
-        var a = pref.getInt("_ONE",1)
-        var b = pref.getInt("_TWO",1000)
-        var k = pref.getInt("_TWOO",1000)
-        var c = pref.getInt("_THREE",1)
-        var d = pref.getInt("_FOUR",1)
-        var e = pref.getInt("_FIVE",1)
-        //var n = pref.getInt("_PEOPLE",1)
-        var i = pref.getInt("_IMAGECODE",1)
+        val a = pref.getInt("_ONE",1)
+        val b = pref.getInt("_TWO",1000)
+        val k = pref.getInt("_TWOO",9000)
+        val c = pref.getInt("_THREE",1)
+        val d = pref.getInt("_FOUR",1)
+        val e = pref.getInt("_FIVE",1)
+        //  n = pref.getInt("_PEOPLE",1)
+        val i = pref.getInt("_IMAGECODE",1)
 
 
         level = a
-        bloodBar.progress  = b
         bloodBar.max  = k
+        bloodBar.progress  = b
+
         randomCount = c
         specialCount = d
         killCount = e
         if(killCount==0){
             nextStageBtn.visibility= View.VISIBLE
         }
+        imageCode=i
         //nomalDamage = n
 
         when(i){
@@ -258,14 +296,15 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    override fun onPause() {
+    override fun onStop() {
         saveData(level, bloodBar.progress,bloodBar.max,randomCount,specialCount,killCount,nomalDamage,imageCode)
-        super.onPause()
+        super.onStop()
     }
 
-    override fun onResume() {
+
+    override fun onRestart() {
         loadData()
-        super.onResume()
+        super.onRestart()
     }
 
 }

@@ -3,6 +3,8 @@ package com.honwon.monsterkiller
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.util.*
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -14,6 +16,14 @@ class ExampleUnitTest {
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
 
-        println((153.0/343.0*100).toInt())
+        println((6/3.0).toInt())
+        println(Random().nextInt(2))
+        println(Random().nextInt(2))
+        println(Random().nextInt(2))
+        println(Random().nextInt(2))
+        println(Random().nextInt(2))
+        println(Random().nextInt(2))
+        println(Random().nextInt(2))
+
     }
 }
