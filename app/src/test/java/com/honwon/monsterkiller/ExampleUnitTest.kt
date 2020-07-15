@@ -13,5 +13,7 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+
+        println((153.0/343.0*100).toInt())
     }
 }

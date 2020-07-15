@@ -9,15 +9,16 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="310dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="32dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bloodBar"
-        app:srcCompat="@drawable/pngwing_com" />
+        app:srcCompat="@drawable/boss_1" />
 
     <ProgressBar
         android:id="@+id/bloodBar"
@@ -27,63 +28,80 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="73dp"
-        android:max="10000"
-        android:progress="10000"
-        android:scaleY="7"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        android:max="1000"
+        android:progress="1000"
+        android:scaleY="5"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/nomal"
+        android:id="@+id/nomalBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginBottom="244dp"
         android:text="일반공격"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/skill"
+        android:id="@+id/skillBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="84dp"
         android:text="스킬"
-        app:layout_constraintBottom_toBottomOf="@+id/nomal"
+        app:layout_constraintBottom_toBottomOf="@+id/nomalBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/nomal"
+        app:layout_constraintTop_toTopOf="@+id/nomalBtn"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/damage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="244dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <Button
-        android:id="@+id/random"
+        android:id="@+id/randomBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="108dp"
         android:text="랜덤공격"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/fingerDamage"
+        android:id="@+id/fingerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="136dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginBottom="104dp"
         android:text="지문공격"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textDamage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="100dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Button
+        android:id="@+id/nextStageBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="계속 도전"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textBlood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/bloodBar"
+        app:layout_constraintEnd_toEndOf="@+id/bloodBar"
+        app:layout_constraintTop_toTopOf="@+id/bloodBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>
