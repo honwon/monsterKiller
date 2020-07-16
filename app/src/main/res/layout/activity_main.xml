@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#323232"
+        android:foregroundTint="#FFFFFF"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="우주 최강 몬스터"
+        app:titleTextColor="#FFFFFF" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
@@ -27,22 +41,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:max="1000"
         android:progress="1000"
         android:progressTint="#FF0000"
-        android:scaleY="6"
+        android:scaleY="7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
         android:id="@+id/nomalBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="50dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/night"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -54,6 +69,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="50dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/magicwand"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -66,7 +82,9 @@
         android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/magiccircle"
+        app:layout_constraintBottom_toTopOf="@+id/nextStageBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
@@ -77,8 +95,10 @@
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/fingerprint"
         android:backgroundTint="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/nextStageBtn"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
@@ -116,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:textColor="@android:color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bloodBar"
         app:layout_constraintEnd_toEndOf="@+id/bloodBar"
@@ -127,6 +148,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textColor="#FFFFFF"
+        android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/bloodBar"
         app:layout_constraintStart_toStartOf="@+id/bloodBar"
@@ -150,7 +172,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.6" />
+        app:layout_constraintGuide_percent="0.65" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -164,7 +186,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.80" />
 
     <TextView
         android:id="@+id/fingerText"

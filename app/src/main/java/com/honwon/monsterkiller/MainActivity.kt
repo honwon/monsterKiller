@@ -1,13 +1,12 @@
 package com.honwon.monsterkiller
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color.*
 import android.graphics.drawable.Drawable
 import android.os.*
 import android.transition.Transition
-import android.view.Gravity
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
@@ -20,17 +19,14 @@ import com.bumptech.glide.request.target.GlideDrawableImageViewTarget
 import kotlinx.android.synthetic.main.activity_main.*
 import me.aflak.libraries.FingerprintCallback
 import me.aflak.libraries.FingerprintDialog
-import org.jetbrains.anko.alert
+import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.Appcompat
-import org.jetbrains.anko.longToast
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.toast
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    var blood = 1000
+    var blood = 3000
     var level = 1
     var mana = 100
 
@@ -40,8 +36,10 @@ class MainActivity : AppCompatActivity() {
    var randomCount = 1
 
     var nomalDamage = 1
-    var skillDamage = nomalDamage * 5
-    var moveDamage = nomalDamage * 10
+    var skillDamage = 1
+    var moveDamage = 1
+    var randomDamage = 1
+
 
     //죽었는지 확인
     var killCount = 1
@@ -49,26 +47,53 @@ class MainActivity : AppCompatActivity() {
 
     var esterEgg =0
 
+    var resetCount = 0
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.setting -> {
+            val intent = Intent(this, SettingActivity::class.java)
+            intent.putExtra("id", resetCount)
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            startActivity(intent)
+            true
+        }
+
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        damageInit()
+
+        loadData()
+
+        setSupportActionBar(findViewById(R.id.toolbar))
+        // 앱바 이름 아이콘
+
+        val ab = supportActionBar
         loadData()
         bloodB()
 
 
-
         bloodBar.setOnClickListener {
             if(esterEgg==15){
-                attack(100000000)
+                attack(2147483647)
             }else{
                 esterEgg+=1
             }
 
         }
-
-
 
         fingerBtn.setOnClickListener {
             if(fingerCount==0){
@@ -79,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= 23) {
                 FingerprintDialog.initialize(this).title("필살기").message("우오오오오 나에게 힘을!").callback(object : FingerprintCallback {
                         // 인증성공인 경우의 컬백 함수
-                        override fun onAuthenticationSuccess() {Toast.makeText(applicationContext, "지문 공격!", Toast.LENGTH_SHORT).show()
+                        override fun onAuthenticationSuccess() {
                             damageInit()
                             attack(moveDamage)
                             Glide.with(applicationContext)
@@ -103,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                 Glide.with(applicationContext)
                     .load(R.raw.skill)
                     .into(GlideDrawableImageViewTarget(imageEffect,1))
-            var randomDamage = Random().nextInt(skillDamage * 20 + 1)
+                damageInit()
             attack(randomDamage)}
             Handler().postDelayed({
                 window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
@@ -131,12 +156,16 @@ class MainActivity : AppCompatActivity() {
             attack(skillDamage)
             Handler().postDelayed({
                 window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-            },500)
+            },700)
 
         }
 
         //다음스테이지 버튼
         nextStageBtn.setOnClickListener {
+            window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            Handler().postDelayed({
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+            },5000)
             Glide.with(applicationContext)
                 .load(R.raw.epicbeam)
                 .into(GlideDrawableImageViewTarget(imageEffect,1))
@@ -148,7 +177,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
 
 
 
@@ -194,6 +222,8 @@ class MainActivity : AppCompatActivity() {
     fun imageChange() {
         val nanugi = (bloodBar.progress.toFloat() / bloodBar.max.toFloat() * 100).toInt()
         when (nanugi) {
+            in 91..100 -> {imageView.setImageResource(R.drawable.boss_1)
+                imageCode = 1}
             in 71..90 -> {imageView.setImageResource(R.drawable.boss_2)
                 imageCode = 2}
             in 51..70 -> {imageView.setImageResource(R.drawable.boss_3)
@@ -214,10 +244,11 @@ class MainActivity : AppCompatActivity() {
 
 
     fun damageInit(){
-        nomalDamage = 1
-        nomalDamage =  Random().nextInt(nomalDamage+level)+nomalDamage*level
-        skillDamage = Random().nextInt(nomalDamage*5)+nomalDamage*5
-        moveDamage = Random().nextInt(nomalDamage*level*10) +nomalDamage * 100
+        nomalDamage = 1+level
+        nomalDamage =  Random().nextInt(nomalDamage)+nomalDamage*5
+        skillDamage = Random().nextInt(nomalDamage*5)+nomalDamage*10
+        moveDamage = Random().nextInt(nomalDamage*10) +nomalDamage *50
+        randomDamage=Random().nextInt(nomalDamage*15) +nomalDamage *75
 
     }
 
@@ -243,7 +274,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun revibalMessage(){
         val number = Random().nextInt(4)
-        Handler().postDelayed({
+
             when(number){
                 0 -> longToast("크하하하하하하핫 너는 날 죽일 수 없다!").apply{
                     setGravity(Gravity.CENTER_HORIZONTAL,0,0)
@@ -257,16 +288,13 @@ class MainActivity : AppCompatActivity() {
                 3 -> longToast("과연 나를 죽일 수 있을까?").apply{
                     setGravity(Gravity.CENTER_HORIZONTAL,0,0)
                     setGravity(Gravity.CENTER_VERTICAL,0,300)  }
-
-            }
-        }, 1500)
-    }
+    }}
 
     // 보스 회복
     fun bossHeal() {
         esterEgg=0
         level += 1
-        blood += 100 * level * level
+        blood += 100*level*level
         bloodBar.max = blood
         bloodBar.progress = blood
         killCount = 1
@@ -292,13 +320,14 @@ class MainActivity : AppCompatActivity() {
                 .into(GlideDrawableImageViewTarget(imageEffect, 1))
             val beforeProgress = bloodBar.progress
             when (nanugi) {
-                in 71..90 -> bloodBar.progress +=level * (Random().nextInt(2)+1)
-                in 51..70 -> bloodBar.progress +=level * (Random().nextInt(4)+2)
-                in 36..50 -> bloodBar.progress +=level * (Random().nextInt(8)+4)
-                in 21..35 -> bloodBar.progress +=level * (Random().nextInt(16)+8)
-                in 11..20 -> bloodBar.progress +=level * (Random().nextInt(32)+16)
-                in 1..10 -> bloodBar.progress += level* (Random().nextInt(64)+32)
+                in 71..90 -> bloodBar.progress += (Random().nextInt(nomalDamage*5)+nomalDamage*1)
+                in 51..70 -> bloodBar.progress += (Random().nextInt(nomalDamage*10)+nomalDamage*2)
+                in 36..50 -> bloodBar.progress += (Random().nextInt(nomalDamage*15)+nomalDamage*3)
+                in 21..35 -> bloodBar.progress += (Random().nextInt(nomalDamage*20)+nomalDamage*4)
+                in 11..20 -> bloodBar.progress += (Random().nextInt(nomalDamage*25)+nomalDamage*5)
+                in 1..10 -> bloodBar.progress += (Random().nextInt(nomalDamage*30)+nomalDamage*6)
             }
+
             val afterProgress = bloodBar.progress
             textDamage.setText("+${afterProgress-beforeProgress}")
             Handler().postDelayed({
@@ -323,7 +352,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    fun loadData() {
+    open fun loadData() {
         val pref = this.getPreferences(0)
         val a = pref.getInt("_ONE",1)
         val b = pref.getInt("_TWO",1000)
@@ -363,7 +392,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun saveData(level: Int ,blood:Int,bloodMax:Int,random:Int,spacial:Int,kill:Int, nomaldamage:Int,image :Int) {
+    open fun saveData(level: Int ,blood:Int,bloodMax:Int,random:Int,spacial:Int,kill:Int, nomaldamage:Int,image :Int) {
         val pref = this.getPreferences(0)
         val editor = pref.edit()
         editor.putInt("_ONE",level)
@@ -377,14 +406,53 @@ class MainActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    fun init(){
+
+        blood = 1000
+        level = 1
+        mana = 100
+        fingerCount = 1
+        randomCount = 1
+        nomalDamage = 1
+        skillDamage = nomalDamage * 5
+        moveDamage = nomalDamage * 10
+        killCount = 1
+        imageCode = 1
+        bloodBar.max = blood
+        bloodBar.progress = blood
+        window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        Handler().postDelayed({
+            window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+        },1200)
+        Glide.with(applicationContext)
+            .load(R.raw.epicbeam)
+            .into(GlideDrawableImageViewTarget(imageEffect,1))
+        bloodB()
+        countB()
+        imageChange()
+
+    }
+
     override fun onStop() {
         saveData(level, bloodBar.progress,bloodBar.max,randomCount,fingerCount,killCount,nomalDamage,imageCode)
         super.onStop()
     }
 
+    override fun onResume() {
+
+        resetCount = intent.getIntExtra("idd", 0)
+
+        if (resetCount == 1) {
+            init()
+        }
+        super.onResume()
+    }
 
     override fun onRestart() {
+
         loadData()
+
+
         super.onRestart()
     }
 

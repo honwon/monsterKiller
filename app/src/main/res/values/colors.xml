@@ -10,4 +10,5 @@
         <color name="colorButton">#283593</color>
         <!-- 버튼 텍스트에서 사용할 컬러 -->
         <color name="colorButtonText">#000000</color>
+        <color name="action">#FFFFFF</color>
 </resources>

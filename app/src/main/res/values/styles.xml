@@ -1,7 +1,7 @@
 <resources>
     <!-- Base application theme. -->
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- 테마의 주요 컬러 -->
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <!-- 테마의 어두운 주요 컬러 -->
@@ -12,6 +12,19 @@
         <item name="colorButtonNormal">@color/colorButton</item>
         <!-- 버튼등 텍스트 컬러 -->
         <item name="android:textColor">@color/colorButtonText</item>
+
+        <!-- used for the back arrow on the action bar -->
+        <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item>
+
     </style>
+
+
+
+    <style name="AppTheme.ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- THIS is where you can color the arrow and the overflow button! -->
+        <item name="colorControlNormal">#FFFFFF</item> <!-- sets the color for the back arrow -->
+    </style>
+
+
 
 </resources>
