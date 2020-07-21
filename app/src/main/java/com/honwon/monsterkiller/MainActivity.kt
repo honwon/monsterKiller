@@ -88,6 +88,7 @@ class MainActivity : AppCompatActivity() {
 
         bloodBar.setOnClickListener {
             if(esterEgg==15){
+                toast("축하합니다! 이스터에그를 발견했습니다")
                 attack(2147483647)
             }else{
                 esterEgg+=1
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 fingerCount -= 1
                 countB()
             if (Build.VERSION.SDK_INT >= 23) {
-                FingerprintDialog.initialize(this).title("필살기").message("우오오오오 나에게 힘을!").callback(object : FingerprintCallback {
+                FingerprintDialog.initialize(this).title("필살기").message("우오오오오 나에게 힘을!\n(지문 등록을 하지 않으면 사용 하실 수 없습니다)").callback(object : FingerprintCallback {
                         // 인증성공인 경우의 컬백 함수
                         override fun onAuthenticationSuccess() {
                             damageInit()
